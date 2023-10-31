@@ -83,11 +83,11 @@ class Queue(object, metaclass=abc.ABCMeta):
 
 
 class AtMostOnceQueue(Queue):
-    def run_once(self, exclude_ids=[]):
+    def run_once(self):
         assert not connection.in_atomic_block
         job = None
         try:
-            job = self.job_model.dequeue(exclude_ids=exclude_ids)
+            job = self.job_model.dequeue()
             if job:
                 self.logger.debug('Claimed %r.', job, extra={
                     'data': {
@@ -106,7 +106,7 @@ class AtLeastOnceQueue(Queue):
         job = None
         try:
             with transaction.atomic():
-                job = self.job_model.dequeue(exclude_ids=exclude_ids)
+                job = self.job_model.dequeue()
                 if job:
                     self.logger.debug('Claimed %r.', job, extra={
                         'data': {
