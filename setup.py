@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='makavafal-django-postgres-queue',
-    version='1.0.2',
+    version='1.0.3',
     packages=[
         'dpq',
         'dpq.migrations',
